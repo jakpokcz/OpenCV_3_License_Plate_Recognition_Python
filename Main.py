@@ -27,7 +27,11 @@ def main():
         return                                                          # and exit program
     # end if
 
-    imgOriginalScene  = cv2.imread("LicPlateImages/1.png")               # open image
+    imgOriginalScene = cv2.VideoCapture(0)
+    imgOriginalScene.set(3,640)
+    imgOriginalScene.set(4,480)
+    #imgOriginalScene  = cv2.imread("LicPlateImages/1.png")               # open image
+
 
     if imgOriginalScene is None:                            # if image was not read successfully
         print("\nerror: image not read from file \n\n")  # print error message to std out
@@ -72,8 +76,12 @@ def main():
         cv2.imwrite("imgOriginalScene.png", imgOriginalScene)           # write image out to file
 
     # end if else
-
-    cv2.waitKey(0)					# hold windows open until user presses a key
+    while True:
+        sucess, feed = imgOriginalScene.read()
+        cv2.imshow("Videofeed", feed)
+        if cv2.waitKey(1) & 0xFF == ord("q"):
+            break
+    #cv2.waitKey(0)					# hold windows open until user presses a key
 
     return
 # end main
@@ -132,21 +140,3 @@ def writeLicensePlateCharsOnImage(imgOriginalScene, licPlate):
 ###################################################################################################
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
